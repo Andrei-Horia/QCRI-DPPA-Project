@@ -1,126 +1,114 @@
 import logo from './logo.svg';
 import './App.css';
 
+import { rawData } from './storeData'
 
-//DATA STRUCTURE
-let data = {
-        title: 'title',
-        paragraphs: [
+function convertData(rawData){
+
+    let result = []    
+
+    //Loop through all the paragraphs
+    for(let i=0;i<rawData.sentence_propaganda.length;i++)
+    {
+        let currentParagraph = {}
+        let fixedStart = 0
+        let start = 0
+        let end = 0
+        let text = ""
+        let first = true
+
+
+        currentParagraph.annotations = []
+
+        //Loop through all the words
+        for(let j=0;j<rawData.sentence_propaganda[i].tokens.length;j++)
         {
-            paragraph: "Global heating and unsustainable use will create unprecedented competition for water resources, leading to the displacement of millions of people [theme; peace and security]. This will negatively affect health and productivity, and act as a threat multiplier for instability and conflict.  The solution is clear.  We musturgently  [sense of direction; negative] scale up investments in healthy watersheds and water infrastructure, with dramatic improvements in the efficiency of water use.   We must anticipate and respond to climate risks at every level of water management.  We need to urgently [sense of direction; negative] step up efforts to strengthen resilience and adaptation for people affected by climate disruption [theme;  peace and security]. And above all, we must use this year and COP26 [twenty-sixth Conference of Parties to the United Nations Framework Convention on Climate Change] in Glasgow to bend the emissions curve and create a secure foundation for water sustainability.",
-            annotations: [
+            //Store text
+            text += rawData.sentence_propaganda[i].tokens[j] + " "   
+            end += rawData.sentence_propaganda[i].tokens[j].length
+            
+            //Remeber starting point (sicne we could have multiple consecutive words with the same color)
+            if(rawData.sentence_propaganda[i].tags[j] !== "O")
+                if(first)
                 {
-                    start: 0,
-                    end: 14, 
-                    color: "#FFF15E"
-                },
+                    first = false
+                    fixedStart = start
+                }
+            
+            //Store 
+            if(rawData.sentence_propaganda[i].tags[j] !== "O")    
+                if(j === rawData.sentence_propaganda[i].tokens.length || 
+                    rawData.sentence_propaganda[i].tags[j] !== rawData.sentence_propaganda[i].tags[j+1])
                 {
-                    start: 15,
-                    end: 258,
-                    color: "#ED9726"
-                },
-                {
-                    start: 314,
-                    end: 457,
-                    color: "#FFF15E"
-                },
-                {
-                    start: 500,
-                    end: 684,
-                    color: "#FFF15E"
-                },
-                {
-                    start: 797,
-                    end: 959,
-                    color: "#FD6262"
-                }]
-        },
-        {
-          paragraph: "The 8 November 2020 general elections provide a strong mandate to the National League for Democracy, reflecting the clear will of the people of Myanmar [theme; country situation] to continue on the hard-won path of democratic reform [theme; electoral development]. The Secretary-General urges [grade ofaction; action advised] the military leadership to respect the will of the people of Myanmar [theme;country situation].   and adhere to  democratic norms  [theme; electoral development], with anydifferences to be resolved through peaceful dialogue.  All leaders must act in the greater interest of Myanmar’s democratic reform, engaging in meaningful dialogue, refraining from violence and fully respecting  human rights and fundamental freedoms [theme; human rights].  The Secretary-General reaffirms [grade of action; action advised] the unwavering support of the United Nations to the people of Myanmar [theme; country situation] in their pursuit of democracy, peace, human rights and the rule of law. [theme; peace and security]",
-          annotations: [
-              {
-                  start: 4,
-                  end: 19, 
-                  color: "#ED9726"
-              },
-              {
-                  start: 20,
-                  end: 65,
-                  color: "#4FA1E8"
-              },
-              {
-                  start: 70,
-                  end: 85,
-                  color: "#ED9726"
-              },
-              {
-                  start: 198,
-                  end: 325,
-                  color: "#FFF15E"
-              },
-              {
-                  start: 450,
-                  end: 627,
-                  color: "#4FA1E8"
-              },
-              {
-                  start: 678,
-                  end: 769,
-                  color: "#FFF15E"
-              },
-              {
-                  start: 852,
-                  end: 1005,
-                  color: "#FFF15E"
-              }]
-
-        }]
-      }
-
-function App() {
-    let HTMLElements = []
-    for(let i=0;i<data.paragraphs.length;i++)
-    { 
-        let storeCharacter = []
-  
-        //Create new array with two fields. 
-        //One holds the character and the other one the color of the highlighting.
-        for(let j=0;j<data.paragraphs[i].paragraph.length;j++)
-            storeCharacter.push([data.paragraphs[i].paragraph[j],'white'])
-        
-
-        //Fill in with the interval color 
-        for(let j=0;j<data.paragraphs[i].annotations.length;j++)
-        {
-            let START = data.paragraphs[i].annotations[j].start
-            let END = data.paragraphs[i].annotations[j].end
-            for(let l=START;l<END;l++)
-                storeCharacter[l][1] = data.paragraphs[i].annotations[j].color
+                    let annotations = {}
+                    annotations.start = fixedStart
+                    annotations.end = end
+                    annotations.color = rawData.sentence_propaganda[i].tags[j]
+                    currentParagraph.annotations.push(annotations)
+                    first = true
+                }   
+                 
+            start = end + 1
+            end++
         }
         
-        //Wrap every character in a span / Create an array of JSX Elements 
-        let elem = []
-        for(let j=0;j<storeCharacter.length;j++){
-            let character = storeCharacter[j][0]
-            let color = storeCharacter[j][1]
-            elem.push(<span style={{backgroundColor:color}}>{character}</span>)
-        
-        }
-
-        //Push and store this array of JSX elements in as a new html element 
-        HTMLElements.push(elem)
+        //Store paragraph and push to result
+        currentParagraph.paragraph = text
+        result.push(currentParagraph)
     }
 
-    console.log(HTMLElements)
+    let data = {}
+    data.title = rawData.key
+    data.paragraphs = result
 
-    //Separate each paragraph
-    HTMLElements = HTMLElements.map(word => 
-          <div><div className='paragraph'>{word}</div><br></br></div>)
+    return data
+
+}
+
+let data = convertData(rawData)
+
+function App(){
     
-    //Return everything
-    return (<div>
-                <h1 className = 'title'> Title: "This is a new title" </h1>
-                {HTMLElements}
-            </div>)
+    let HTMLElements = []
+    for(let i=0;i<data.paragraphs.length;i++)
+    {
+        let paragraphElements = []
+        let startingPoint = 0
+        let stoppingPoint
+        let current
+
+        for(let j=0;j<data.paragraphs[i].annotations.length;j++)
+        {
+            stoppingPoint = data.paragraphs[i].annotations[j].start
+            let end = data.paragraphs[i].annotations[j].end
+            let color = data.paragraphs[i].annotations[j].color
+
+            current = data.paragraphs[i].paragraph.slice(startingPoint, stoppingPoint)
+            paragraphElements.push(<span>{current}</span>)
+
+            current = data.paragraphs[i].paragraph.slice(stoppingPoint, end)
+            paragraphElements.push(<span className="highlight" style={{backgroundColor:color}}>{current}</span>)
+        
+            startingPoint = end
+        }
+        
+        stoppingPoint = data.paragraphs[i].paragraph.length
+        current = data.paragraphs[i].paragraph.slice(startingPoint, stoppingPoint)
+        
+        paragraphElements.push(<span>{current}</span>)
+        
+        HTMLElements.push(paragraphElements)
+
+    }
+
+    
+    HTMLElements = HTMLElements.map(word => 
+        <div><div className='paragraph'>{word}</div><br></br></div>)
+
+
+        return (<div>
+            <h1 className = "title"> {data.title} </h1>
+            {HTMLElements}
+        </div>)
 }
 export default App;
