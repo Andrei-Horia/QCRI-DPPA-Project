@@ -1,0 +1,176 @@
+
+.wrap-text{
+    white-space: nowrap;
+    position: relative;
+}
+
+.header-writing{
+    padding-top:2%;
+    margin-left: auto;
+    padding-left:4%;
+    font-size: 50px;
+    font-style:italic;
+    font-style:bold;
+    color:black;
+    font-family: Times;
+    display: inline-block;
+    
+}
+
+.header-image{
+    position:absolute;
+    right:0;
+    top:-2px;
+    height: 100%;
+    width: 60%;
+}
+
+.smaller-header-writing{
+    color: #4dd2ff;
+    margin-left: 5%;
+    letter-spacing: 3.5px;
+    font-size: 30px;
+}
+
+.plus{
+    position:absolute;
+    padding-top: 3%;
+    display: inline-block;
+    padding-left: 1%;
+}
+
+hr.solid {
+    border-top: 1px groove grey
+  }
+
+
+
+.article-content{
+    border-width: 2px 1px 4px 1px;
+    border-style: solid;
+    border-color:  gray black;
+    border-radius: 10px 10px 20px 20px;
+    
+    margin-left: 6%;
+    margin-top: 5%;
+
+    padding-top: 1%;
+    padding-left: 1%;
+    padding-right: 1%;
+
+    width:50%;
+    height: 650px;
+
+    overflow:auto;
+
+    
+}
+
+
+.article-search{
+    margin-top: 3%;
+    margin-left: 12%;
+    white-space: nowrap;
+}
+
+.article-source{
+    font-style:bold;
+    font-weight:bolder;
+    display: inline-block;
+}
+
+
+
+.article-search-forms{
+    margin-left: 2%;
+    display:inline-block;
+}
+
+
+.article-search-bar{
+    width:250%;
+    border-right-color:white;
+    background: #fafafa;
+    border-color: lightgray;
+    border-radius: 5px 5px 5px 5px;
+
+   
+}
+
+.fa-searh{
+    background: #fafafa;
+    border-color: lightgray;
+    border-radius: 5px 5px 5px 5px;   
+}
+
+
+
+
+
+.themes-section{
+    position: absolute;
+    margin-top: -45%;
+    right: 14%;
+}
+
+
+.themes-sense-of-direction{
+    right: 0%;
+}
+
+.themes-header{
+    font-style:bold;
+    font-weight:bolder;
+    font-size: 20px;
+
+    padding-bottom: 10%;
+
+}
+
+[name="blue"] {
+    
+    height: 35px;
+    width: 35px;
+
+    display: inline-block;
+
+    margin-left:-30%;
+    margin-right: 70%;
+    border: 6px red;
+  }
+
+[name="red"] {
+    
+    height: 35px;
+    width: 35px;
+
+    display: inline-block;
+
+    margin-right: 70%;
+    border: 6px red;
+}
+
+[name="green"] {
+    
+    height: 35px;
+    width: 35px;
+    
+    display: inline-block;
+
+ 
+    border: 6px red;
+}
+
+
+.footer-qcri-logo{
+    right: 24%;
+    position:absolute;
+    
+}
+
+.footer-dppa-logo{
+    margin-top: 8%;
+    left:24%;
+    position: absolute;
+    width: 20%;
+}

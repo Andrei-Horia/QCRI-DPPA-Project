@@ -8,7 +8,7 @@ import '../node_modules/bulma/css/bulma.min.css';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+      <App/>
   </React.StrictMode>,
   document.getElementById('root')
 );
