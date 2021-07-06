@@ -2,6 +2,22 @@ import '../App.css';
 
 import { rawData } from '../storeData'
 
+let colorDict = {
+    '#ff471a': 0,
+    '#ffff1a': 1,
+    '#79ff4d': 2,
+    '#cce6ff': 3,
+    '#66b3ff': 4,
+    '#1a8cff': 5,
+    '#f0b3ff': 6,
+    '#e066ff': 7,
+    '#d11aff':8
+};
+
+
+let currentThemes = {}
+let currentLocations = {}
+
 function convertData(rawData){
 
     let result = []    
@@ -45,7 +61,14 @@ function convertData(rawData){
                     annotations.color = rawData.sentence_propaganda[i].tags[j]
                     currentParagraph.annotations.push(annotations)
                     first = true
-                }   
+                }
+            
+        
+            if(rawData.sentence_propaganda[i].tags[j].includes('theme'))
+                currentThemes[rawData.sentence_propaganda[i].tags[j].slice(7, rawData.sentence_propaganda[i].tags[j].length)] = false;                  
+            else
+                if(rawData.sentence_propaganda[i].tags[j].includes('location'))
+                    currentLocations[rawData.sentence_propaganda[i].tags[j].slice(10, rawData.sentence_propaganda[i].tags[j].length)] = false;        
                  
             start = end + 1
             end++
@@ -66,24 +89,12 @@ function convertData(rawData){
 
 let data = convertData(rawData)
 
-let colorDict = {
-    'red': 0,
-    'blue': 1,
-    'green': 2,
-    'pink': 3,
-    'purple': 4,
-    'white': 5,
-    'gray': 6,
-    'black': 7,
-    'darkgreen':8
-};
-
+export {currentThemes};
+export {currentLocations};
 
 function Article(props){
-    
-    console.log(props);
+
     let currentStatus = props.curr;
-    
 
     let HTMLElements = []
     for(let i=0;i<data.paragraphs.length;i++)
@@ -103,11 +114,27 @@ function Article(props){
             paragraphElements.push(<span>{current}</span>)
 
             current = data.paragraphs[i].paragraph.slice(stoppingPoint, end)
-                   
-            if(currentStatus[colorDict[color]] === true)
-                paragraphElements.push(<span className="highlight" style={{backgroundColor:color}}>{current}</span>)
+            
+            if(color.includes('theme'))
+            {
+                if(props.currThemes[color.slice(7,color.lenght)])
+                    paragraphElements.push(<span className="highlight" style={{backgroundColor:"#ffff80"}}>{current}</span>)
+                else
+                    paragraphElements.push(<span>{current}</span>)
+            }
             else
-                paragraphElements.push(<span>{current}</span>)
+                if(color.includes('location'))
+                {
+                    if(props.currLocations[color.slice(10,color.lenght)])
+                        paragraphElements.push(<span className="highlight" style={{backgroundColor:"#99ffff"}}>{current}</span>)
+                    else
+                        paragraphElements.push(<span>{current}</span>)
+                }
+                else
+                    if(currentStatus[colorDict[color]] === true)
+                        paragraphElements.push(<span className="highlight" style={{backgroundColor:color}}>{current}</span>)
+                    else
+                        paragraphElements.push(<span>{current}</span>)
 
             startingPoint = end
         }
@@ -120,7 +147,6 @@ function Article(props){
         HTMLElements.push(paragraphElements)
 
     }
-
     
     HTMLElements = HTMLElements.map(word => 
         <div><div className='paragraph'>{word}</div><br></br></div>)
@@ -147,4 +173,5 @@ function Article(props){
             </div>
         </div>)
 }
+
 export default Article;

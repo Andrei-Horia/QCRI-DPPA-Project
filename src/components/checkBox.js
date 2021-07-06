@@ -16,7 +16,10 @@ class CheckBox extends React.Component{
       this.id = props.id;
       this.name = props.name;
 
+      this.txt = props.txt;
       this.call = props.callBack;
+
+      this.marginLeft = props.margin;
     }
   
     handleChecked () {
@@ -26,15 +29,10 @@ class CheckBox extends React.Component{
     }
   
     render(){
-      let txt = "";
-      if(currentState[parseInt(this.id)])
-        txt = "hey";
-      else
-        txt = "bye"
-
-      return (<div>
-         <input type="Checkbox" name="blue" value="yes" onChange={ this.handleChecked} />
-         <p>{txt}</p>
+      return (
+      <div>
+         <input type="Checkbox" name="blue" value="yes" onChange={this.handleChecked} />
+         <p style={{marginLeft:this.marginLeft, fontSize: '12px'}}>{this.txt}</p>
       </div>)
     }
   }
