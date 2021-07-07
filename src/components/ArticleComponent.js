@@ -93,7 +93,7 @@ export {currentThemes};
 export {currentLocations};
 
 function Article(props){
-
+    
     let currentStatus = props.curr;
 
     let HTMLElements = []
@@ -147,15 +147,21 @@ function Article(props){
         HTMLElements.push(paragraphElements)
 
     }
+
+
+    let textStatus = true;
+    function hideText(){
+        textStatus = !textStatus;
+    }
     
     HTMLElements = HTMLElements.map(word => 
         <div><div className='paragraph'>{word}</div><br></br></div>)
 
 
         return (
-        
         <div class="note">
             <div class='article-content'>
+                <button class="article-help" onClick={hideText}>?</button>
                 {HTMLElements}
             </div>
 

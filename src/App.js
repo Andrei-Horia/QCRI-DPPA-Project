@@ -24,17 +24,23 @@ class App extends React.Component{
         };
         this.returnDataToApp = this.returnDataToApp.bind(this);
         this.callBackButton = this.callBackButton.bind(this);
+        this.callBackClear = this.callBackClear.bind(this);
     }
     
+    callBackClear(evt){
+        this.setState({currThemes: evt[0]})
+        this.setState({currLocations: evt[1]})
+        this.setState({curr: evt[2]})
+    }
+
     callBackButton(evt){
         if(evt[1] == "themes")
             this.setState({currThemes: evt[0]})
         else
-            this.setState({currentLocations: evt[0]})
+            this.setState({currLocations: evt[0]})
     }
 
     returnDataToApp(evt){
-        status=evt;
         this.setState({curr: evt});    
         return evt;
     }
@@ -46,8 +52,19 @@ class App extends React.Component{
             
                 <div>
                     <Header />
-                    <Article curr={this.state.curr} currThemes={this.state.currThemes} currLocations={this.state.currLocations}/>
-                    <Themes callBack={this.returnDataToApp} callBackButton={this.callBackButton} currentThemes={currentThemes} currentLocations={currentLocations}/>
+                    <Article 
+                        curr={this.state.curr} 
+                        currThemes={this.state.currThemes} 
+                        currLocations={this.state.currLocations}
+                    />
+                    
+                    <Themes 
+                        callBack={this.returnDataToApp} 
+                        callBackButton={this.callBackButton} 
+                        callBackClear = {this.callBackClear}
+                        currentThemes={currentThemes} 
+                        currentLocations={currentLocations}
+                    />
                     <Footer/>
                 </div>
             )

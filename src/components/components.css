@@ -60,6 +60,7 @@ hr.solid {
 
     width:50%;
     height: 650px;
+    max-width: 50%;
 
     overflow:auto;
 
@@ -92,9 +93,17 @@ hr.solid {
     border-right-color:white;
     background: #fafafa;
     border-color: lightgray;
-    border-radius: 5px 5px 5px 5px;
+    border-width: 2px 1px 2px 1px;
+    border-radius: 10px 10px 10px 10px;
 
    
+}
+
+.article-help{
+    margin-left: 95%;
+    background: #fafafa;
+    font-weight: bold;
+    border-radius: 15px 15px 15px 15px;
 }
 
 .fa-searh{
@@ -102,9 +111,6 @@ hr.solid {
     border-color: lightgray;
     border-radius: 5px 5px 5px 5px;   
 }
-
-
-
 
 
 .themes-section{
@@ -165,6 +171,9 @@ hr.solid {
     margin-left:-30%;
     margin-right: 70%;
     border: 6px red;
+
+    border-radius: 20px 20px 20px 20px;  
+    
   }
 
 [name="red"] {
@@ -176,6 +185,8 @@ hr.solid {
 
     margin-right: 70%;
     border: 6px red;
+
+    border-radius: 20px 20px 20px 20px;  
 }
 
 [name="green"] {
@@ -185,8 +196,9 @@ hr.solid {
     
     display: inline-block;
 
- 
     border: 6px red;
+
+    border-radius: 20px 20px 20px 20px;  
 }
 
 

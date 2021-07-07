@@ -1,7 +1,6 @@
 import './components.css'
 
 import React from 'react';
-import ReactDOM from 'react-dom';
 
 class Button extends React.Component{
     constructor(props) {
@@ -20,17 +19,17 @@ class Button extends React.Component{
       this.callBack = props.callBack;
     }
     
+
     handleChecked () {
         this.setState({currentState: !(this.state.currentState)});
-        this.callBack([this.txt, !this.state.currentState, this.name]);
+        this.callBack([this.txt, !this.props.status, this.name]);
     }
 
   
     render(){
-
       let backColor = this.color;
-
-      if(this.state.currentState === false)
+      
+      if(this.props.status === false)
             backColor = '#fafafa';
 
       return (
