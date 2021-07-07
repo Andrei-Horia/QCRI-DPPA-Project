@@ -16,6 +16,7 @@ class CheckBox extends React.Component{
 
       this.txt = props.txt;
       this.call = props.callBack;
+      this.color = props.color;
 
       this.marginLeft = props.margin;
 
@@ -28,12 +29,19 @@ class CheckBox extends React.Component{
     }
     
     render(){
+      let shadow = {
+        backgroundColor: this.color,
+        boxShadow: "0 0 2px " + this.color
+      }
 
+      
 
+      if(!this.props.currentState)
+        shadow.backgroundColor = "#fafafa";
 
       return (
       <div>
-         <input checked={this.props.currentState} class="checkbox-border" type="Checkbox" name="blue" value="yes" onChange={this.handleChecked} />
+         <button style={shadow}  class="checkbox-border" name="blue" onClick={this.handleChecked} />
          <p style={{marginLeft:this.marginLeft, fontSize: '12px'}}>{this.txt}</p>
       </div>)
     }

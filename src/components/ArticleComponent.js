@@ -1,3 +1,4 @@
+import React from 'react';
 import '../App.css';
 
 import { rawData } from '../storeData'
@@ -11,7 +12,7 @@ let colorDict = {
     '#1a8cff': 5,
     '#f0b3ff': 6,
     '#e066ff': 7,
-    '#d11aff':8
+    '#d11aff': 8
 };
 
 
@@ -92,77 +93,100 @@ let data = convertData(rawData)
 export {currentThemes};
 export {currentLocations};
 
-function Article(props){
+class Article extends React.Component{
     
-    let currentStatus = props.curr;
+    constructor(props){
+        super()
 
-    let HTMLElements = []
-    for(let i=0;i<data.paragraphs.length;i++)
-    {
-        let paragraphElements = []
-        let startingPoint = 0
-        let stoppingPoint
-        let current
+        this.state = {
+            hideTextState: false
+        }
 
-        for(let j=0;j<data.paragraphs[i].annotations.length;j++)
+        this.hideText = this.hideText.bind(this);
+    }
+    
+    buildArticle(){
+        let HTMLElements = []
+        for(let i=0;i<data.paragraphs.length;i++)
         {
-            stoppingPoint = data.paragraphs[i].annotations[j].start
-            let end = data.paragraphs[i].annotations[j].end
-            let color = data.paragraphs[i].annotations[j].color
+            let paragraphElements = []
+            let startingPoint = 0
+            let stoppingPoint
+            let current
 
-            current = data.paragraphs[i].paragraph.slice(startingPoint, stoppingPoint)
-            paragraphElements.push(<span>{current}</span>)
-
-            current = data.paragraphs[i].paragraph.slice(stoppingPoint, end)
-            
-            if(color.includes('theme'))
+            for(let j=0;j<data.paragraphs[i].annotations.length;j++)
             {
-                if(props.currThemes[color.slice(7,color.lenght)])
-                    paragraphElements.push(<span className="highlight" style={{backgroundColor:"#ffff80"}}>{current}</span>)
-                else
-                    paragraphElements.push(<span>{current}</span>)
-            }
-            else
-                if(color.includes('location'))
+                stoppingPoint = data.paragraphs[i].annotations[j].start
+                let end = data.paragraphs[i].annotations[j].end
+                let color = data.paragraphs[i].annotations[j].color
+
+                current = data.paragraphs[i].paragraph.slice(startingPoint, stoppingPoint)
+                paragraphElements.push(<span>{current}</span>)
+
+                current = data.paragraphs[i].paragraph.slice(stoppingPoint, end)
+                
+                if(color.includes('theme'))
                 {
-                    if(props.currLocations[color.slice(10,color.lenght)])
-                        paragraphElements.push(<span className="highlight" style={{backgroundColor:"#99ffff"}}>{current}</span>)
+                    if(this.props.currThemes[color.slice(7,color.lenght)])
+                        paragraphElements.push(<span className="highlight" style={{backgroundColor:"#ffff80"}}>{current}</span>)
                     else
                         paragraphElements.push(<span>{current}</span>)
                 }
                 else
-                    if(currentStatus[colorDict[color]] === true)
-                        paragraphElements.push(<span className="highlight" style={{backgroundColor:color}}>{current}</span>)
+                    if(color.includes('location'))
+                    {
+                        if(this.props.currLocations[color.slice(10,color.lenght)])
+                            paragraphElements.push(<span className="highlight" style={{backgroundColor:"#99ffff"}}>{current}</span>)
+                        else
+                            paragraphElements.push(<span>{current}</span>)
+                    }
                     else
-                        paragraphElements.push(<span>{current}</span>)
+                        if(this.props.curr[colorDict[color]] === true)
+                            paragraphElements.push(<span className="highlight" style={{backgroundColor:color}}>{current}</span>)
+                        else
+                            paragraphElements.push(<span>{current}</span>)
 
-            startingPoint = end
+                startingPoint = end
+            }
+            
+            stoppingPoint = data.paragraphs[i].paragraph.length
+            current = data.paragraphs[i].paragraph.slice(startingPoint, stoppingPoint)
+            
+            paragraphElements.push(<span>{current}</span>)
+            
+            HTMLElements.push(paragraphElements)
+
         }
         
-        stoppingPoint = data.paragraphs[i].paragraph.length
-        current = data.paragraphs[i].paragraph.slice(startingPoint, stoppingPoint)
-        
-        paragraphElements.push(<span>{current}</span>)
-        
-        HTMLElements.push(paragraphElements)
+        HTMLElements = HTMLElements.map(word => 
+            <div><div className='paragraph'>{word}</div><br></br></div>)
+
+        return HTMLElements;
 
     }
 
-
-    let textStatus = true;
-    function hideText(){
-        textStatus = !textStatus;
+    hideText(){
+        this.setState({hideTextState: !this.state.hideTextState});
     }
-    
-    HTMLElements = HTMLElements.map(word => 
-        <div><div className='paragraph'>{word}</div><br></br></div>)
 
+    render(){
+        
+        let HTMLText;
+        if(!this.state.hideTextState)
+            HTMLText = this.buildArticle();
+        else
+            HTMLText = (<div>Text Hidden</div>);
 
+        let symbol = "?"
+        
+        if(this.state.hideTextState)
+            symbol = "X"
+        
         return (
         <div class="note">
             <div class='article-content'>
-                <button class="article-help" onClick={hideText}>?</button>
-                {HTMLElements}
+                <button class="article-help" onClick={this.hideText}>{symbol}</button>
+                {HTMLText}
             </div>
 
             <div class='article-search'> 
@@ -178,6 +202,7 @@ function Article(props){
                 </form>    
             </div>
         </div>)
+    }
 }
 
 export default Article;

@@ -158,7 +158,13 @@ hr.solid {
     border-radius: 8px 8px 8px 8px; 
     width:100px;
     height:30px;
+}
 
+.checkbox-border{
+    border-color: black;
+    border-width: 2px 2px 2px 2px;
+
+    background-color:#fafafa;
 }
 
 [name="blue"] {
@@ -170,21 +176,17 @@ hr.solid {
 
     margin-left:-30%;
     margin-right: 70%;
-    border: 6px red;
-
-    border-radius: 20px 20px 20px 20px;  
     
+    border-radius: 20px 20px 20px 20px;  
   }
 
 [name="red"] {
-    
     height: 35px;
     width: 35px;
 
     display: inline-block;
 
     margin-right: 70%;
-    border: 6px red;
 
     border-radius: 20px 20px 20px 20px;  
 }
@@ -195,8 +197,6 @@ hr.solid {
     width: 35px;
     
     display: inline-block;
-
-    border: 6px red;
 
     border-radius: 20px 20px 20px 20px;  
 }
