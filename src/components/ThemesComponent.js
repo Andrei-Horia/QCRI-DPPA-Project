@@ -97,6 +97,7 @@ class Themes extends React.Component{
     }
 
     render(){
+    
         return(
             <div class='themes-section'>
                 <div style={{marginBottom: "7%"}}>
@@ -119,7 +120,7 @@ class Themes extends React.Component{
                     <div class='wrap-text' style={{marginBottom: "10%", marginRight: "30%"}}>
                         
                         <div name="blue"> 
-                            <CheckBox id="0" callBack={this.grabData} txt='Negative' margin='-45%' currentState={this.state.currentState[0]} color="#ff471a"/>
+                            <CheckBox id="0" callBack={this.grabData} txt='Negative' margin='-45%' currentState={this.state.currentState[0]} color="#ff471a" help={this.props.help}/>
                         </div>
                         <div name="red"> 
                             <CheckBox id="1" callBack={this.grabData} txt='Neutral'  margin='-35%' currentState={this.state.currentState[1]} color="#ffff1a"/>
@@ -156,7 +157,7 @@ class Themes extends React.Component{
                             <CheckBox id="6" callBack={this.grabData} txt='Other' margin='-25%' currentState={this.state.currentState[6]} color="#f0b3ff"/>
                         </div>
                         <div name="red"> 
-                            <CheckBox id="7" callBack={this.grabData} txt='Action Advised'  margin='-90%' currentState={this.state.currentState[7]} color="#e066ff"/>
+                            <CheckBox id="7" callBack={this.grabData} txt='Action Advised'  margin='-90%' currentState={this.state.currentState[7]} color="#e066ff" help={this.props.help}/>
                         </div>
                         <div name="green"> 
                             <CheckBox id="8" callBack={this.grabData} txt='Action Taken'  margin='-80%' currentState={this.state.currentState[8]} color="#d11aff"/>

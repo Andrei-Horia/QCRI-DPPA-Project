@@ -102,6 +102,7 @@ class Article extends React.Component{
             hideTextState: false
         }
 
+        this.callBackHelp = props.callBackHelp.bind(this);
         this.hideText = this.hideText.bind(this);
     }
     
@@ -167,6 +168,7 @@ class Article extends React.Component{
 
     hideText(){
         this.setState({hideTextState: !this.state.hideTextState});
+        this.callBackHelp(!this.state.hideTextState);
     }
 
     render(){
@@ -175,13 +177,38 @@ class Article extends React.Component{
         if(!this.state.hideTextState)
             HTMLText = this.buildArticle();
         else
-            HTMLText = (<div>Text Hidden</div>);
+            HTMLText = (
+                <div className="paragraph" >
+                    <h1 style={{fontWeight: "bold", fontSize: "20px", marginBottom: "5%", marginLeft: "40%"}}>Helper Menu</h1>
+                    <p style={{marginLeft: "5%", marginBottom: "5%"}}>
+                        -Press the right-side menu buttons to highlight the selected language of diplomacy- 
+                    </p>
+
+                    <h1 style={{fontWeight: "bold", fontSize: "20px", marginBottom: "5%", marginLeft: "42%"}}>Exemple</h1>
+                    <span>
+                        Wearing a mask or face covering is currently a legal requirement in many places, but could the rules change as lockdown eases further? Reviews are being carried out into how and when Covid measures, including face coverings, might be lifted. 
+                    </span>
+                    <span style={{backgroundColor: "#ff471a", marginLeft: "2px", marginRight: "2px"}} class="highlight"> 
+                        The Social Distancing Review
+                    </span>
+                    <span>
+                        is one of four different UK government studies assessing how Covid-19 should be handled from "summer onwards". It's looking at social distancing rules going forward, and what easing might mean for other Covid-safe measures.
+                    </span>
+                    <span style={{backgroundColor: "#e066ff", marginLeft: "2px", marginRight: "2px"}} class="highlight">
+                         We won't know for sure whether face-covering rules  
+                    </span>
+                    <span>
+                        are likely to remain until ministers assess the reviews, but it's thought face-coverings might still be needed in some circumstances - particularly during winter. Some people may opt to wear them, even if they are not compulsory. 
+                    </span>
+
+                </div>);
 
         let symbol = "?"
         
         if(this.state.hideTextState)
             symbol = "X"
         
+
         return (
         <div class="note">
             <div class='article-content'>

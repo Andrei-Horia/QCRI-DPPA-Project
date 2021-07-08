@@ -21,7 +21,10 @@ class App extends React.Component{
             curr: status,
             currThemes: currentThemes,
             currLocations: currentLocations,
+            help: false
         };
+
+        this.callBackHelp = this.callBackHelp.bind(this);
         this.returnDataToApp = this.returnDataToApp.bind(this);
         this.callBackButton = this.callBackButton.bind(this);
         this.callBackClear = this.callBackClear.bind(this);
@@ -45,9 +48,11 @@ class App extends React.Component{
         return evt;
     }
     
+    callBackHelp(evt){
+        this.setState({help: evt});
+    }
 
-    render(){    
-
+    render(){
         return(
             
                 <div>
@@ -56,6 +61,7 @@ class App extends React.Component{
                         curr={this.state.curr} 
                         currThemes={this.state.currThemes} 
                         currLocations={this.state.currLocations}
+                        callBackHelp = {this.callBackHelp}
                     />
                     
                     <Themes 
@@ -64,6 +70,7 @@ class App extends React.Component{
                         callBackClear = {this.callBackClear}
                         currentThemes={currentThemes} 
                         currentLocations={currentLocations}
+                        help={this.state.help}
                     />
                     <Footer/>
                 </div>

@@ -103,6 +103,10 @@ hr.solid {
     margin-left: 95%;
     background: #fafafa;
     font-weight: bold;
+
+    width: 25px;
+    max-width: 25px;
+
     border-radius: 15px 15px 15px 15px;
 }
 

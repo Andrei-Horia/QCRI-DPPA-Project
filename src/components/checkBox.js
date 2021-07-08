@@ -31,12 +31,12 @@ class CheckBox extends React.Component{
     render(){
       let shadow = {
         backgroundColor: this.color,
-        boxShadow: "0 0 2px " + this.color
+        boxShadow: "0 0 2px " + this.color,
       }
 
+    
       
-
-      if(!this.props.currentState)
+      if(!this.props.currentState && !this.props.help)
         shadow.backgroundColor = "#fafafa";
 
       return (
