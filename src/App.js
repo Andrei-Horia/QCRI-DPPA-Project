@@ -1,5 +1,6 @@
 
 import './App.css';
+import "./storeFunctions"
 import React from 'react';
 import ReactDOM from 'react-dom';
 
